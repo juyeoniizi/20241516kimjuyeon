@@ -1,0 +1,6 @@
+{
+  "name": "김주연 크리에이티브 포트폴리오",
+  "description": "브랜드 마케터이자 크리에이티브 기획자 김주연의 프리미엄 에디토리얼 포트폴리오 북입니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
