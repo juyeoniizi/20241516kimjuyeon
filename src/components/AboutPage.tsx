@@ -10,11 +10,11 @@ import { usePortfolio } from "../context/PortfolioContext";
 import Editable from "./Editable";
 import { safeStorage } from "../utils/storage";
 
-import portraitImg from "../assets/images/20251208_024929031.png";
+import portraitImg from "../assets/images/juyeon_profile_1781543537437.jpg";
 const PORTRAIT_PATH = portraitImg;
 
 export default function AboutPage() {
-  const { aboutMe, setAboutMe, isEditMode, profileImage, setProfileImage } = usePortfolio();
+  const { aboutMe, setAboutMe, isEditMode, profileImage, setProfileImage, showImages } = usePortfolio();
   const [copiedText, setCopiedText] = useState<string | null>(null);
 
   const handleImageFile = (file: File) => {
@@ -153,23 +153,44 @@ export default function AboutPage() {
             onClick={() => document.getElementById("profile-image-upload")?.click()}
             className="relative cursor-pointer overflow-hidden rounded-2xl aspect-[3/4] max-w-[280px] sm:max-w-[320px] shadow-lg border-2 border-dashed border-pink-200 hover:border-pink-500 bg-neutral-50 transition-all duration-300 group"
           >
-            <img
-              src={profileImage}
-              alt={aboutMe.name}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            {showImages ? (
+              <img
+                src={profileImage}
+                alt={aboutMe.name}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = PORTRAIT_PATH;
+                }}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-tr from-pink-100 via-rose-50 to-amber-50/60 p-6 flex flex-col justify-between select-none">
+                <div className="border border-pink-200/50 p-4 rounded-xl flex-1 flex flex-col justify-between items-center text-center">
+                  <div className="text-[10px] font-mono tracking-widest text-pink-600 font-bold uppercase">BRAND MARKETER</div>
+                  <div className="my-auto space-y-1">
+                    <div className="text-4xl font-serif font-black tracking-widest text-neutral-800">
+                      {aboutMe.name?.[0] || "김"}{aboutMe.name?.[1] || "주"}{aboutMe.name?.[2] || "연"}
+                    </div>
+                    <div className="text-[11px] font-mono text-neutral-400 tracking-wider">KIM JU YEON</div>
+                  </div>
+                  <div className="w-6 h-[1px] bg-pink-300 my-2" />
+                  <div className="text-[9px] font-sans text-neutral-500 leading-relaxed font-semibold">
+                    Creative Strategy & Ideation
+                  </div>
+                </div>
+              </div>
+            )}
             
             {/* Glassmorphic Edit Overlay */}
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white gap-2 select-none">
               <Camera className="w-8 h-8 text-pink-300 drop-shadow" />
-              <span className="text-xs font-sans font-semibold tracking-wider">증명사진 직접 업로드</span>
-              <span className="text-[10px] text-neutral-200 font-sans px-4 text-center">클릭하거나 사진 파일을 여기에 드래그앤드롭 하세요</span>
+              <span className="text-xs font-sans font-semibold tracking-wider">사진 직접 업로드</span>
+              <span className="text-[10px] text-neutral-200 font-sans px-4 text-center">클릭하거나 사진 파일을 드래그앤드롭 하세요</span>
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-pink-950/40 via-transparent to-transparent opacity-85 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-950/20 via-transparent to-transparent opacity-80 pointer-events-none" />
             <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center pointer-events-none">
-              <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-semibold text-rose-950 tracking-wider shadow-sm">
+              <span className="px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-semibold text-rose-950 tracking-wider shadow-sm border border-pink-100/30">
                 Creative Strategy & Marketing
               </span>
             </div>

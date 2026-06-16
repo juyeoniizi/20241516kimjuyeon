@@ -17,8 +17,9 @@ interface ArchiveItem {
 }
 
 export default function ArchivePage() {
-  const { isEditMode, archiveItems, setArchiveItems, updateArchiveImage } = usePortfolio();
+  const { isEditMode, archiveItems, setArchiveItems, updateArchiveImage, showImages } = usePortfolio();
   const [activeItem, setActiveItem] = useState<ArchiveItem | null>(null);
+  const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
 
   const handleTextChange = (index: number, key: keyof ArchiveItem, val: string) => {
     setArchiveItems((prev) =>
@@ -88,12 +89,42 @@ export default function ArchivePage() {
           >
             {/* Aspect image frame */}
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-50">
-              <img
-                src={item.image}
-                alt={item.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+              {!showImages || failedImages[idx] ? (
+                <div className={`w-full h-full p-4 flex flex-col justify-between select-none text-left bg-gradient-to-tr ${
+                  item.category.toLowerCase().includes("poster")
+                    ? "from-purple-100 via-pink-50 to-rose-50"
+                    : item.category.toLowerCase().includes("ui")
+                    ? "from-indigo-100 via-sky-50 to-blue-50"
+                    : item.category.toLowerCase().includes("vmd")
+                    ? "from-amber-100 via-yellow-50 to-orange-50"
+                    : item.category.toLowerCase().includes("character")
+                    ? "from-pink-100 via-rose-50 to-purple-50"
+                    : item.category.toLowerCase().includes("packaging")
+                    ? "from-teal-100 via-emerald-50 to-cyan-50"
+                    : "from-stone-100 via-zinc-50 to-neutral-50"
+                }`}>
+                  <div className="flex justify-between items-center text-[7px] font-mono tracking-widest text-[#5c4a4a] opacity-80 border-b border-[#5c4a4a]/10 pb-1">
+                    <span>EDIT. GALLERY</span>
+                    <span>No.{(idx + 1).toString().padStart(2, '0')}</span>
+                  </div>
+                  <div className="my-auto py-2">
+                    <h5 className="text-[10px] sm:text-xs font-serif font-bold tracking-tight text-neutral-800 line-clamp-2 leading-snug">
+                      {item.title}
+                    </h5>
+                  </div>
+                  <div className="text-[7px] font-mono tracking-wider opacity-65 text-right">
+                    TEXT ART MODE
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  referrerPolicy="no-referrer"
+                  onError={() => setFailedImages(prev => ({ ...prev, [idx]: true }))}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              )}
               
               {/* Blur color layer */}
               {!isEditMode ? (
@@ -203,14 +234,51 @@ export default function ArchivePage() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="relative aspect-[16:10] bg-neutral-100">
-                <img
-                  src={activeItem.image}
-                  alt={activeItem.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {(() => {
+                const idx = archiveItems.findIndex(i => i.title === activeItem.title);
+                return !showImages || (idx !== -1 && failedImages[idx]) ? (
+                  <div className={`relative aspect-[16/10] p-8 flex flex-col justify-between bg-gradient-to-tr ${
+                    activeItem.category.toLowerCase().includes("poster")
+                      ? "from-purple-100 via-pink-50 to-rose-50"
+                      : activeItem.category.toLowerCase().includes("ui")
+                      ? "from-indigo-100 via-sky-50 to-blue-50"
+                      : activeItem.category.toLowerCase().includes("vmd")
+                      ? "from-amber-100 via-yellow-50 to-orange-50"
+                      : activeItem.category.toLowerCase().includes("character")
+                      ? "from-pink-100 via-rose-50 to-purple-50"
+                      : activeItem.category.toLowerCase().includes("packaging")
+                      ? "from-teal-100 via-emerald-50 to-cyan-50"
+                      : "from-stone-100 via-zinc-50 to-neutral-50"
+                  }`}>
+                    <div className="flex justify-between items-center text-[9px] font-mono tracking-widest text-[#5c4a4a] opacity-80 border-b border-[#5c4a4a]/10 pb-1.5">
+                      <span>EDIT. GALLERY DETAIL</span>
+                      <span>No.{idx !== -1 ? (idx + 1).toString().padStart(2, '0') : "00"}</span>
+                    </div>
+                    <div className="my-auto py-6">
+                      <h5 className="text-base sm:text-lg font-serif font-bold tracking-tight text-neutral-800 leading-snug">
+                        {activeItem.title}
+                      </h5>
+                    </div>
+                    <div className="text-[9px] font-mono tracking-wider opacity-65 text-right">
+                      TEXT ART MODE
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative aspect-[16/10] bg-neutral-100">
+                    <img
+                      src={activeItem.image}
+                      alt={activeItem.title}
+                      referrerPolicy="no-referrer"
+                      onError={() => {
+                        if (idx !== -1) {
+                          setFailedImages(prev => ({ ...prev, [idx]: true }));
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                );
+              })()}
 
               <div className="p-6 md:p-8 space-y-3">
                 <div className="flex items-center gap-2">

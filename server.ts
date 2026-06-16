@@ -26,55 +26,56 @@ app.post("/api/save-portfolio", (req, res) => {
       fs.mkdirSync(dir, { recursive: true });
     }
 
-    // Helper to save base64 to file
-    const saveBase64Image = (base64Str: string, filename: string) => {
-      if (!base64Str || !base64Str.startsWith("data:image/")) return false;
+    // Dynamic file trackers with high-quality original JPEG defaults
+    let juyeonProfileFile = "juyeon_profile_1781543537437.jpg";
+    let bifanDisplayFile = "bifan_display_1781543608335.jpg";
+    let cosrxAppMockupFile = "cosrx_app_mockup_1781543557154.jpg";
+    let cosrxCharacterIpFile = "cosrx_character_ip_1781543574219.jpg";
+    let drBandPackagingFile = "dr_band_packaging_1781543627035.jpg";
+    let teapotExhibitionFile = "teapot_exhibition_1781543591256.jpg";
+
+    // Helper to save base64 and discover correct extension
+    const saveBase64WithCorrectExt = (base64Str: string, baseName: string, fallbackDefault: string) => {
+      if (!base64Str || !base64Str.startsWith("data:image/")) return fallbackDefault;
       const matches = base64Str.match(/^data:image\/([A-Za-z\-+]+);base64,(.+)$/);
-      if (!matches || matches.length !== 3) return false;
+      if (!matches || matches.length !== 3) return fallbackDefault;
+      
+      const ext = matches[1] === "jpeg" ? "jpg" : matches[1];
+      const filename = `${baseName}_saved.${ext}`;
       const buffer = Buffer.from(matches[2], "base64");
       const filePath = path.join(dir, filename);
       fs.writeFileSync(filePath, buffer);
-      console.log(`Successfully saved physical image file: ${filename}`);
-      return true;
+      console.log(`Saved physical image file with correct extension matches: ${filename}`);
+      return filename;
     };
 
     // Save profile image
     if (profileImage) {
-      saveBase64Image(profileImage, "20251208_024929031.png");
+      juyeonProfileFile = saveBase64WithCorrectExt(profileImage, "juyeon_profile_portrait", juyeonProfileFile);
     }
 
-    // Save project images from base64 if present
+    // Save project images from base64 if present, dynamically updating the tracker names
     if (projects && Array.isArray(projects)) {
       projects.forEach((proj: any) => {
         if (proj.image && proj.image.startsWith("data:image/")) {
-          let filename = "";
-          if (proj.id === "act01") filename = "20260616_025041219.png";
-          if (proj.id === "act02") filename = "20260616_025041219_02.png";
-          if (proj.id === "act03") filename = "2026-06-16.png";
-          if (proj.id === "act04") filename = "20260616_025041219_03.png";
-          if (proj.id === "act05") filename = "20260616_025041219_01.png";
-          
-          if (filename) {
-            saveBase64Image(proj.image, filename);
-          }
+          if (proj.id === "act01") cosrxAppMockupFile = saveBase64WithCorrectExt(proj.image, "cosrx_app_mockup", cosrxAppMockupFile);
+          if (proj.id === "act02") teapotExhibitionFile = saveBase64WithCorrectExt(proj.image, "teapot_exhibition", teapotExhibitionFile);
+          if (proj.id === "act03") bifanDisplayFile = saveBase64WithCorrectExt(proj.image, "bifan_display", bifanDisplayFile);
+          if (proj.id === "act04") cosrxCharacterIpFile = saveBase64WithCorrectExt(proj.image, "cosrx_character_ip", cosrxCharacterIpFile);
+          if (proj.id === "act05") drBandPackagingFile = saveBase64WithCorrectExt(proj.image, "dr_band_packaging", drBandPackagingFile);
         }
       });
     }
 
-    // Save archive images if present
+    // Save archive images if present, dynamically updating the tracker names
     if (archiveItems && Array.isArray(archiveItems)) {
       archiveItems.forEach((item: any, idx: number) => {
         if (item.image && item.image.startsWith("data:image/")) {
-          let filename = "";
-          if (idx === 0) filename = "20260616_025041219_02.png";
-          if (idx === 1) filename = "20260616_025041219.png";
-          if (idx === 2) filename = "2026-06-16.png";
-          if (idx === 3) filename = "20260616_025041219_03.png";
-          if (idx === 4) filename = "20260616_025041219_01.png";
-          
-          if (filename) {
-            saveBase64Image(item.image, filename);
-          }
+          if (idx === 0) teapotExhibitionFile = saveBase64WithCorrectExt(item.image, "teapot_exhibition", teapotExhibitionFile);
+          if (idx === 1) cosrxAppMockupFile = saveBase64WithCorrectExt(item.image, "cosrx_app_mockup", cosrxAppMockupFile);
+          if (idx === 2) bifanDisplayFile = saveBase64WithCorrectExt(item.image, "bifan_display", bifanDisplayFile);
+          if (idx === 3) cosrxCharacterIpFile = saveBase64WithCorrectExt(item.image, "cosrx_character_ip", cosrxCharacterIpFile);
+          if (idx === 4) drBandPackagingFile = saveBase64WithCorrectExt(item.image, "dr_band_packaging", drBandPackagingFile);
         }
       });
     }
@@ -90,13 +91,13 @@ app.post("/api/save-portfolio", (req, res) => {
 
 import { Project, CareerExperience } from "./types";
 
-import bifanDisplay from "./assets/images/2026-06-16.png";
-import cosrxAppMockup from "./assets/images/20260616_025041219.png";
-import cosrxCharacterIp from "./assets/images/20260616_025041219_03.png";
+import bifanDisplay from "./assets/images/${bifanDisplayFile}";
+import cosrxAppMockup from "./assets/images/${cosrxAppMockupFile}";
+import cosrxCharacterIp from "./assets/images/${cosrxCharacterIpFile}";
 import creativeMoodboard from "./assets/images/creative_moodboard_1781543674062.jpg";
-import drBandPackaging from "./assets/images/20260616_025041219_01.png";
-import teapotExhibition from "./assets/images/20260616_025041219_02.png";
-import juyeonProfile from "./assets/images/20251208_024929031.png";
+import drBandPackaging from "./assets/images/${drBandPackagingFile}";
+import teapotExhibition from "./assets/images/${teapotExhibitionFile}";
+import juyeonProfile from "./assets/images/${juyeonProfileFile}";
 
 export const PORTFOLIO_NAME_KR = ${JSON.stringify(aboutMe.name || "김주연")};
 export const PORTFOLIO_TITLE_KR = ${JSON.stringify(aboutMe.role || "크리에이티브 기획 & 브랜드 마케터 포트폴리오")};

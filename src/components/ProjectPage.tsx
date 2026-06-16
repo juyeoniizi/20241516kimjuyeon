@@ -29,7 +29,13 @@ interface ProjectPageProps {
 }
 
 export default function ProjectPage({ project }: ProjectPageProps) {
-  const { isEditMode, setProjects, updateProjectImage } = usePortfolio();
+  const { isEditMode, setProjects, updateProjectImage, showImages } = usePortfolio();
+  const [imageError, setImageError] = React.useState<boolean>(false);
+
+  // Sync state if project changes
+  React.useEffect(() => {
+    setImageError(false);
+  }, [project.id]);
 
   const handleTextChange = (key: keyof Project, val: string) => {
     setProjects((prev) =>
@@ -41,6 +47,65 @@ export default function ProjectPage({ project }: ProjectPageProps) {
     if (isEditMode) {
       document.getElementById(`proj-img-upload-${project.id}`)?.click();
     }
+  };
+
+  const renderMoodPlaceholder = (id: string, title: string) => {
+    let gradient = "from-rose-50 to-pink-100/50";
+    let textColor = "text-rose-950";
+    let subtitle = "BRAND MARKETING STRATEGY";
+    let symbol = "✦";
+
+    if (id === "act01") {
+      gradient = "from-rose-50/70 via-pink-100/40 to-rose-100/50";
+      textColor = "text-rose-900";
+      subtitle = "COSRX CORE STRATEGY";
+      symbol = "✦ COSRX PLAN";
+    } else if (id === "act02") {
+      gradient = "from-slate-900 via-stone-800 to-rose-950/50";
+      textColor = "text-rose-200";
+      subtitle = "EXHIBITION 418: I'M A TEAPOT";
+      symbol = "☕ 418 TEAPOT";
+    } else if (id === "act03") {
+      gradient = "from-amber-50 to-amber-100/50";
+      textColor = "text-amber-900";
+      subtitle = "BIFAN SPONSORSHIP OPERATING";
+      symbol = "🎬 BIFAN INDIE";
+    } else if (id === "act04") {
+      gradient = "from-pink-50 to-pink-100/60";
+      textColor = "text-pink-900";
+      subtitle = "COSRX NEW CHARACTER IP";
+      symbol = "🧸 CONCEPT ILLUSTR";
+    } else if (id === "act05") {
+      gradient = "from-teal-50 to-teal-100/30";
+      textColor = "text-teal-900";
+      subtitle = "DR. BAND TARGET SALES PM";
+      symbol = "🩺 HEALTH SAVER";
+    } else if (id === "act06") {
+      gradient = "from-indigo-50 to-indigo-100/40";
+      textColor = "text-indigo-950";
+      subtitle = "CONSUMER METRIC ANALYSIS";
+      symbol = "📊 METRIC SYNC";
+    }
+
+    return (
+      <div className={`w-full h-full bg-gradient-to-br ${gradient} p-4 sm:p-6 flex flex-col justify-between select-none min-h-[220px] rounded-xl transition-all`}>
+        <div className="border border-current/10 p-4 rounded-lg flex-1 flex flex-col justify-between h-full">
+          <div className="flex items-center justify-between text-[8px] font-mono tracking-widest opacity-80">
+            <span>EDITORIAL SOURCE</span>
+            <span>{symbol}</span>
+          </div>
+          <div className="my-auto py-4 space-y-1.5 text-center">
+            <p className="text-[9px] font-mono tracking-widest opacity-70 uppercase">{subtitle}</p>
+            <h3 className="text-xs sm:text-sm font-serif font-extrabold tracking-tight max-w-[200px] sm:max-w-xs mx-auto leading-relaxed">
+              {title}
+            </h3>
+          </div>
+          <div className="text-center text-[8px] font-mono tracking-wider opacity-60">
+            EDITORIAL TEXT BOOK MODE
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -92,12 +157,17 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                   isEditMode ? "cursor-pointer border-dashed border-2 border-pink-400 hover:border-pink-600 hover:shadow-lg transition-all duration-300" : "border-pink-100"
                 }`}
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                {!showImages || imageError ? (
+                  renderMoodPlaceholder(project.id, project.title)
+                ) : (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    referrerPolicy="no-referrer"
+                    onError={() => setImageError(true)}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                )}
                 {isEditMode && (
                   <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white text-xs select-none gap-2">
                     <Camera className="w-7 h-7 text-pink-300" />
@@ -264,12 +334,17 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     isEditMode ? "cursor-pointer border-dashed border-2 border-pink-500 hover:border-pink-300" : "border-pink-900/60"
                   }`}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  {!showImages || imageError ? (
+                    renderMoodPlaceholder(project.id, project.title)
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageError(true)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  )}
                   {isEditMode && (
                     <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white text-xs select-none gap-2">
                       <Camera className="w-7 h-7 text-pink-450 animate-pulse" />
@@ -328,12 +403,17 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     isEditMode ? "cursor-pointer border-dashed border-2 border-amber-500 hover:border-amber-700" : "border-amber-200/40"
                   }`}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  {!showImages || imageError ? (
+                    renderMoodPlaceholder(project.id, project.title)
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageError(true)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  )}
                   {isEditMode && (
                     <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-xs select-none gap-2">
                       <Camera className="w-7 h-7 text-amber-300" />
@@ -448,12 +528,17 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     isEditMode ? "cursor-pointer border-dashed border-2 border-pink-400 hover:border-pink-600" : "border-pink-200/50"
                   }`}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain group-hover:scale-102 transition-transform duration-500"
-                  />
+                  {!showImages || imageError ? (
+                    renderMoodPlaceholder(project.id, project.title)
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageError(true)}
+                      className="w-full h-full object-contain group-hover:scale-102 transition-transform duration-500"
+                    />
+                  )}
                   {isEditMode && (
                     <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white text-xs select-none gap-2 rounded-2xl">
                       <Camera className="w-7 h-7 text-pink-300" />
@@ -614,12 +699,17 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     isEditMode ? "cursor-pointer border-dashed border-2 border-teal-500 hover:border-teal-700" : "border-teal-200/40"
                   }`}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  {!showImages || imageError ? (
+                    renderMoodPlaceholder(project.id, project.title)
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageError(true)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  )}
                   {isEditMode && (
                     <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white text-xs select-none gap-2">
                       <Camera className="w-7 h-7 text-teal-300 animate-pulse" />

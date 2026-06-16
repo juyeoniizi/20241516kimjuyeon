@@ -5,67 +5,30 @@
 
 import { Project, CareerExperience } from "./types";
 
-import bifanDisplay from "./assets/images/2026-06-16.png";
-import cosrxAppMockup from "./assets/images/20260616_025041219.png";
-import cosrxCharacterIp from "./assets/images/20260616_025041219_03.png";
+import bifanDisplay from "./assets/images/bifan_display_1781543608335.jpg";
+import cosrxAppMockup from "./assets/images/cosrx_app_mockup_1781543557154.jpg";
+import cosrxCharacterIp from "./assets/images/cosrx_character_ip_1781543574219.jpg";
 import creativeMoodboard from "./assets/images/creative_moodboard_1781543674062.jpg";
-import drBandPackaging from "./assets/images/20260616_025041219_01.png";
-import teapotExhibition from "./assets/images/20260616_025041219_02.png";
-import juyeonProfile from "./assets/images/20251208_024929031.png";
+import drBandPackaging from "./assets/images/dr_band_packaging_1781543627035.jpg";
+import teapotExhibition from "./assets/images/teapot_exhibition_1781543591256.jpg";
+import juyeonProfile from "./assets/images/juyeon_profile_1781543537437.jpg";
 
 export const PORTFOLIO_NAME_KR = "김주연";
-export const PORTFOLIO_TITLE_KR = "크리에이티브 기획 & 브랜드 마케터 포트폴리오";
+export const PORTFOLIO_TITLE_KR = "Brand Marketer & Creative Planner";
 
 export const ABOUT_ME = {
   name: "김주연",
   englishName: "Kim Juyeon",
   role: "Brand Marketer & Creative Planner",
-  quote: "창의적인 전략과 데이터 분석을 통해 브랜드 가치를 높이고, 고객의 신뢰를 디자인합니다.",
+  quote: "창의적인 전략과 데이터 분석을 통해 \n브랜드 가치를 높이고, \n고객의 신뢰를 디자인합니다.",
   subQuote: "데이터 분석과 고객 중심 사고를 바탕으로 브랜드 인지도를 높이고, 시장을 사로잡는 마크를 남깁니다. 단순한 홍보를 넘어 사람들의 일상에 스며드는 진정성 있는 에디토리얼 브랜드 기획을 추구합니다.",
   phone: "010-9110-1431",
   email: "h20241516@glab.hallym.ac.kr",
-  portrait: juyeonProfile, // Will be wired to the generated image path
-  education: [
-    {
-      institution: "한림대학교",
-      major: "디지털미디어콘텐츠 / 디지털인문예술 전공",
-      period: "2024 - 2028 (재학)",
-    },
-    {
-      institution: "동두천외국어고등학교",
-      major: "중국어과",
-      period: "2021 - 2024 (졸업)",
-    },
-  ],
-  certificates: [
-    "MOS Excel 2016 Expert 취득",
-    "MOS Word 2016 Expert 취득",
-  ],
-  careers: [
-    {
-      company: "올리브영 메이트",
-      role: "고객 커뮤니케이션 및 트렌드 데이터 리포트 지원",
-      period: "2026.03 - 현재",
-    },
-    {
-      company: "메가커피 파트타임",
-      role: "매장 서비스 운영 및 고객 경험 서포트",
-      period: "2025.07 - 현재",
-    },
-    {
-      company: "투썸플레이스 직원",
-      role: "매니지먼트 보조 및 매장 머천다이징 진열 담당",
-      period: "2024.11 - 2025.06",
-    },
-  ],
-  keywords: [
-    "브랜드 전략",
-    "마케팅 기획",
-    "데이터 분석",
-    "스토리텔링",
-    "콘텐츠 기획",
-    "비주얼 브랜딩",
-  ]
+  portrait: juyeonProfile,
+  education: [{"institution":"한림대학교","major":"디지털미디어콘텐츠 / 디지털인문예술 전공","period":"2024 - 2028 (재학)"},{"institution":"동두천외국어고등학교","major":"중국어과","period":"2021 - 2024 (졸업)"}],
+  certificates: ["MOS Excel 2016 Expert 취득","MOS Word 2016 Expert 취득"],
+  careers: [{"company":"올리브영 메이트","role":"고객 커뮤니케이션 및 트렌드 데이터 리포트 지원","period":"2026.03 - 현재"},{"company":"메가커피 파트타임","role":"매장 서비스 운영 및 고객 경험 서포트","period":"2025.07 - 현재"},{"company":"투썸플레이스 직원","role":"매니지먼트 보조 및 매장 머천다이징 진열 담당","period":"2024.11 - 2025.06"}],
+  keywords: ["브랜드 전략","마케팅 기획","데이터 분석","스토리텔링","콘텐츠 기획","비주얼 브랜딩"]
 };
 
 export const PROJECTS: Project[] = [
@@ -229,66 +192,66 @@ export const SKILL_CATEGORIES = [
 
 export const DEFAULT_SKILL_ITEMS = [
   {
-    name: "Figma",
-    level: "Expert",
-    percent: 90,
-    description: "브랜드용 UI/UX 와이어프레임 구축, 귀여운 마스코트 캐릭터 IP 디자인 및 가이드 문서 템플릿화 제작.",
-    category: "design" as const,
+    "name": "Figma",
+    "level": "Expert",
+    "percent": 90,
+    "description": "브랜드용 UI/UX 와이어프레임 구축, 귀여운 마스코트 캐릭터 IP 디자인 및 가이드 문서 템플릿화 제작.",
+    "category": "design"
   },
   {
-    name: "Canva",
-    level: "Expert",
-    percent: 95,
-    description: "코스알엑스 지면 보도 홍보 자료, 동아리용 포토 프레임 카드 및 각종 대학생 오가닉 배너 디자인 고도화.",
-    category: "design" as const,
+    "name": "Canva",
+    "level": "Expert",
+    "percent": 95,
+    "description": "코스알엑스 지면 보도 홍보 자료, 동아리용 포토 프레임 카드 및 각종 대학생 오가닉 배너 디자인 고도화.",
+    "category": "design"
   },
   {
-    name: "Adobe Illustrator",
-    level: "Intermediate",
-    percent: 85,
-    description: "독창적 스티커 삽화, 닥터밴드 정교포장 용기 스케일 벡터 마크업 정립 및 로고 심볼 드로잉.",
-    category: "design" as const,
+    "name": "Adobe Illustrator",
+    "level": "Intermediate",
+    "percent": 85,
+    "description": "독창적 스티커 삽화, 닥터밴드 정교포장 용기 스케일 벡터 마크업 정립 및 로고 심볼 드로잉.",
+    "category": "design"
   },
   {
-    name: "Adobe Photoshop",
-    level: "Intermediate",
-    percent: 80,
-    description: "상품 실사 라이브러리 픽셀 보정, 전람회 티저 이미지 마킹 필터링 및 패키지 3D 렌더링 합성.",
-    category: "design" as const,
+    "name": "Adobe Photoshop",
+    "level": "Intermediate",
+    "percent": 80,
+    "description": "상품 실사 라이브러리 픽셀 보정, 전람회 티저 이미지 마킹 필터링 및 패키지 3D 렌더링 합성.",
+    "category": "design"
   },
   {
-    name: "Adobe Premiere",
-    level: "Intermediate",
-    percent: 75,
-    description: "'418: I'm a teapot' 인터랙티브 소셜 미디어 플랫폼 숏폼 릴스 배포용 일러스트 비디오 컷팅 매칭 조정.",
-    category: "design" as const,
+    "name": "Adobe Premiere",
+    "level": "Intermediate",
+    "percent": 75,
+    "description": "'418: I'm a teapot' 인터랙티브 소셜 미디어 플랫폼 숏폼 릴스 배포용 일러스트 비디오 컷팅 매칭 조정.",
+    "category": "design"
   },
   {
-    name: "AI Tools",
-    level: "Fluent",
-    percent: 90,
-    description: "Gemini / Midjourney 프롬프팅을 통한 무드 패키지 신속 프로토타이핑 및 글로벌 인포그래픽 데이터 시나리오 어시스트.",
-    category: "strategy" as const,
+    "name": "AI Tools",
+    "level": "Fluent",
+    "percent": 90,
+    "description": "Gemini / Midjourney 프롬프팅을 통한 무드 패키지 신속 프로토타이핑 및 글로벌 인포그래픽 데이터 시나리오 어시스트.",
+    "category": "strategy"
   },
   {
-    name: "Microsoft Word",
-    level: "Expert (MOS)",
-    percent: 95,
-    description: "MOS Word Master Expert 취득. 30페이지 분량의 기획 성과 지표 보고서 및 매뉴얼의 양식 규정 완수.",
-    category: "office" as const,
+    "name": "Microsoft Word",
+    "level": "Expert (MOS)",
+    "percent": 95,
+    "description": "MOS Word Master Expert 취득. 30페이지 분량의 기획 성과 지표 보고서 및 매뉴얼의 양식 규정 완수.",
+    "category": "office"
   },
   {
-    name: "Microsoft Excel",
-    level: "Expert (MOS)",
-    percent: 95,
-    description: "MOS Excel Master Expert 취득. 통계 리포트 1,200개 스팟 로깅 정보 정합, 매크로 정밀 회전율 시프트 구현.",
-    category: "office" as const,
+    "name": "Microsoft Excel",
+    "level": "Expert (MOS)",
+    "percent": 95,
+    "description": "MOS Excel Master Expert 취득. 통계 리포트 1,200개 스팟 로깅 정보 정합, 매크로 정밀 회전율 시프트 구현.",
+    "category": "office"
   },
   {
-    name: "PowerPoint (PPT)",
-    level: "Expert",
-    percent: 95,
-    description: "기업 제안용 핏 프레젠테이션 벤치마킹, 인쇄에 특화된 와이드 비율 수치 정돈 슬라이드 덱 구축 감독.",
-    category: "office" as const,
+    "name": "PowerPoint (PPT)",
+    "level": "Expert",
+    "percent": 95,
+    "description": "기업 제안용 핏 프레젠테이션 벤치마킹, 인쇄에 특화된 와이드 비율 수치 정돈 슬라이드 덱 구축 감독.",
+    "category": "office"
   }
 ];

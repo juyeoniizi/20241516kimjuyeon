@@ -11,6 +11,8 @@ import { safeStorage } from "../utils/storage";
 interface PortfolioContextType {
   isEditMode: boolean;
   setIsEditMode: (val: boolean) => void;
+  showImages: boolean;
+  setShowImages: (val: boolean) => void;
   aboutMe: typeof ABOUT_ME;
   setAboutMe: React.Dispatch<React.SetStateAction<typeof ABOUT_ME>>;
   projects: Project[];
@@ -30,6 +32,7 @@ const PortfolioContext = createContext<PortfolioContextType | undefined>(undefin
 
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [showImages, setShowImages] = useState<boolean>(true);
   const [aboutMe, setAboutMe] = useState<typeof ABOUT_ME>(ABOUT_ME);
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
   const [archiveItems, setArchiveItems] = useState<typeof ARCHIVE_ITEMS>(ARCHIVE_ITEMS);
@@ -47,8 +50,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     if (savedAbout) {
       try { 
         const parsed = JSON.parse(savedAbout);
-        // Discard development source paths in local storage
-        if (parsed.portrait && (parsed.portrait.startsWith("/src/") || parsed.portrait.includes("src/assets/images"))) {
+        // Discard development source paths in local storage or empty portrait values
+        if (!parsed.portrait || parsed.portrait.startsWith("/src/") || parsed.portrait.includes("src/assets/images")) {
           parsed.portrait = ABOUT_ME.portrait;
         }
         setAboutMe(parsed); 
@@ -141,6 +144,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     setArchiveItems(ARCHIVE_ITEMS);
     setSkillsList(DEFAULT_SKILL_ITEMS);
     setProfileImage(ABOUT_ME.portrait);
+    setShowImages(true);
     setIsEditMode(false);
     window.location.reload();
   };
@@ -162,6 +166,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       value={{
         isEditMode,
         setIsEditMode,
+        showImages,
+        setShowImages,
         aboutMe,
         setAboutMe,
         projects,
