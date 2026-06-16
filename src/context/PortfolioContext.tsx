@@ -41,6 +41,24 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   // Load from local storage on mount
   useEffect(() => {
+    const currentVersion = "v13";
+    const savedVersion = safeStorage.getItem("juyeon_portfolio_version");
+    if (savedVersion !== currentVersion) {
+      safeStorage.removeItem("juyeon_about_me");
+      safeStorage.removeItem("juyeon_projects");
+      safeStorage.removeItem("juyeon_archive_items");
+      safeStorage.removeItem("juyeon_skills_list");
+      safeStorage.removeItem("juyeon_profile_image");
+      safeStorage.setItem("juyeon_portfolio_version", currentVersion);
+      
+      setAboutMe(ABOUT_ME);
+      setProjects(PROJECTS);
+      setArchiveItems(ARCHIVE_ITEMS);
+      setSkillsList(DEFAULT_SKILL_ITEMS);
+      setProfileImage(ABOUT_ME.portrait);
+      return;
+    }
+
     const savedAbout = safeStorage.getItem("juyeon_about_me");
     const savedProjects = safeStorage.getItem("juyeon_projects");
     const savedArchive = safeStorage.getItem("juyeon_archive_items");
