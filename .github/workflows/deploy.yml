@@ -5,6 +5,10 @@ on:
     branches: ["main", "master"]
   workflow_dispatch:
 
+env:
+  ACTIONS_WARN_UNSECURE_NODE_VERSION: 'false'
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+
 permissions:
   contents: read
   pages: write
