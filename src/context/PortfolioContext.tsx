@@ -71,43 +71,69 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       try {
         const parsed = JSON.parse(savedProjects);
         if (Array.isArray(parsed)) {
-          const merged = parsed.map((item: any) => {
-            const defaultProj = PROJECTS.find((p) => p.id === item.id);
-            if (defaultProj) {
-              const hasCustomImage = item.image && item.image.startsWith("data:image/");
-              const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
-              const isOldGenerated = item.image && (item.image.includes("17815435") || item.image.includes("17815436"));
-              return {
-                ...item,
-                image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? item.image : defaultProj.image,
-              };
-            }
-            return item;
-          });
-          setProjects(merged);
+          const hasAnyUserBase64 = parsed.some((item: any) => item.image && item.image.startsWith("data:image/"));
+          if (hasAnyUserBase64) {
+            const merged = PROJECTS.map((defaultProj) => {
+              const savedProj = parsed.find((p: any) => p.id === defaultProj.id);
+              if (savedProj) {
+                const hasCustomImage = savedProj.image && savedProj.image.startsWith("data:image/");
+                const isSourcePath = savedProj.image && (savedProj.image.startsWith("/src/") || savedProj.image.includes("src/assets/images"));
+                const isOldGenerated = savedProj.image && (savedProj.image.includes("17815435") || savedProj.image.includes("17815436"));
+                return {
+                  ...defaultProj,
+                  ...savedProj,
+                  image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? savedProj.image : defaultProj.image,
+                };
+              }
+              return defaultProj;
+            });
+            setProjects(merged);
+          } else {
+            setProjects(PROJECTS);
+          }
+        } else {
+          setProjects(PROJECTS);
         }
-      } catch (e) { console.error(e); }
+      } catch (e) { 
+        console.error(e); 
+        setProjects(PROJECTS);
+      }
+    } else {
+      setProjects(PROJECTS);
     }
     if (savedArchive) {
       try {
         const parsed = JSON.parse(savedArchive);
         if (Array.isArray(parsed)) {
-          const merged = parsed.map((item: any, idx: number) => {
-            const defaultItem = ARCHIVE_ITEMS[idx];
-            if (defaultItem) {
-              const hasCustomImage = item.image && item.image.startsWith("data:image/");
-              const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
-              const isOldGenerated = item.image && (item.image.includes("17815435") || item.image.includes("17815436"));
-              return {
-                ...item,
-                image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? item.image : defaultItem.image,
-              };
-            }
-            return item;
-          });
-          setArchiveItems(merged);
+          const hasAnyUserBase64 = parsed.some((item: any) => item.image && item.image.startsWith("data:image/"));
+          if (hasAnyUserBase64) {
+            const merged = ARCHIVE_ITEMS.map((defaultItem, idx) => {
+              const savedItem = parsed[idx];
+              if (savedItem) {
+                const hasCustomImage = savedItem.image && savedItem.image.startsWith("data:image/");
+                const isSourcePath = savedItem.image && (savedItem.image.startsWith("/src/") || savedItem.image.includes("src/assets/images"));
+                const isOldGenerated = savedItem.image && (savedItem.image.includes("17815435") || savedItem.image.includes("17815436"));
+                return {
+                  ...defaultItem,
+                  ...savedItem,
+                  image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? savedItem.image : defaultItem.image,
+                };
+              }
+              return defaultItem;
+            });
+            setArchiveItems(merged);
+          } else {
+            setArchiveItems(ARCHIVE_ITEMS);
+          }
+        } else {
+          setArchiveItems(ARCHIVE_ITEMS);
         }
-      } catch (e) { console.error(e); }
+      } catch (e) { 
+        console.error(e); 
+        setArchiveItems(ARCHIVE_ITEMS);
+      }
+    } else {
+      setArchiveItems(ARCHIVE_ITEMS);
     }
     if (savedSkills) {
       try { setSkillsList(JSON.parse(savedSkills)); } catch (e) { console.error(e); }

@@ -71,11 +71,11 @@ app.post("/api/save-portfolio", (req, res) => {
     if (archiveItems && Array.isArray(archiveItems)) {
       archiveItems.forEach((item: any, idx: number) => {
         if (item.image && item.image.startsWith("data:image/")) {
-          if (idx === 0) teapotExhibitionFile = saveBase64WithCorrectExt(item.image, "teapot_exhibition", teapotExhibitionFile);
-          if (idx === 1) cosrxAppMockupFile = saveBase64WithCorrectExt(item.image, "cosrx_app_mockup", cosrxAppMockupFile);
-          if (idx === 2) bifanDisplayFile = saveBase64WithCorrectExt(item.image, "bifan_display", bifanDisplayFile);
+          if (idx === 0) cosrxAppMockupFile = saveBase64WithCorrectExt(item.image, "cosrx_app_mockup", cosrxAppMockupFile);
+          if (idx === 1) drBandPackagingFile = saveBase64WithCorrectExt(item.image, "dr_band_packaging", drBandPackagingFile);
+          if (idx === 2) teapotExhibitionFile = saveBase64WithCorrectExt(item.image, "teapot_exhibition", teapotExhibitionFile);
           if (idx === 3) cosrxCharacterIpFile = saveBase64WithCorrectExt(item.image, "cosrx_character_ip", cosrxCharacterIpFile);
-          if (idx === 4) drBandPackagingFile = saveBase64WithCorrectExt(item.image, "dr_band_packaging", drBandPackagingFile);
+          if (idx === 4) bifanDisplayFile = saveBase64WithCorrectExt(item.image, "bifan_display", bifanDisplayFile);
         }
       });
     }
@@ -136,11 +136,11 @@ export const PROJECTS: Project[] = [
     image: cosrxAppMockup,
   },
   {
-    id: "act02",
+    id: "act05",
     actNumber: "ACT 02",
-    title: ${JSON.stringify(projects[1]?.title || "'418: I\\'m a teapot' 오프라인 전시회 기획 및 홍보")},
-    duration: ${JSON.stringify(projects[1]?.duration || "2026.03 - 2026.06")},
-    role: ${JSON.stringify(projects[1]?.role || "크리에이티브 전시 기획 감독")},
+    title: ${JSON.stringify(projects[1]?.title || "'닥터밴드(Dr. Band)' 타깃 세일즈 강화를 위한 마케팅 및 패키지 개발")},
+    duration: ${JSON.stringify(projects[1]?.duration || "2025.03 - 2025.06")},
+    role: ${JSON.stringify(projects[1]?.role || "핵심 상품 마케팅 전략 PM")},
     summary: ${JSON.stringify(projects[1]?.summary || "")},
     keyInsight: ${JSON.stringify(projects[1]?.keyInsight || "")},
     problem: ${JSON.stringify(projects[1]?.problem || "")},
@@ -148,16 +148,16 @@ export const PROJECTS: Project[] = [
     process: ${JSON.stringify(projects[1]?.process || "")},
     implementation: ${JSON.stringify(projects[1]?.implementation || "")},
     result: ${JSON.stringify(projects[1]?.result || "")},
-    bgColor: "bg-gradient-to-br from-slate-900 via-zinc-900 to-rose-950/40",
-    textColor: "text-rose-100",
-    image: teapotExhibition,
+    bgColor: "bg-gradient-to-br from-teal-55/10 to-teal-100/30",
+    textColor: "text-teal-950",
+    image: drBandPackaging,
   },
   {
-    id: "act03",
+    id: "act02",
     actNumber: "ACT 03",
-    title: ${JSON.stringify(projects[2]?.title || "부천국제판타스틱영화제(BIFAN) 협찬 파트너십 부스 총괄 및 메링 매니저")},
-    duration: ${JSON.stringify(projects[2]?.duration || "2025.06 - 2025.07")},
-    role: ${JSON.stringify(projects[2]?.role || "협찬 운영 및 현장 머천다이저 책임")},
+    title: ${JSON.stringify(projects[2]?.title || "'418: I\\'m a teapot' 오프라인 전시회 기획 및 홍보")},
+    duration: ${JSON.stringify(projects[2]?.duration || "2026.03 - 2026.06")},
+    role: ${JSON.stringify(projects[2]?.role || "크리에이티브 전시 기획 감독")},
     summary: ${JSON.stringify(projects[2]?.summary || "")},
     keyInsight: ${JSON.stringify(projects[2]?.keyInsight || "")},
     problem: ${JSON.stringify(projects[2]?.problem || "")},
@@ -165,9 +165,9 @@ export const PROJECTS: Project[] = [
     process: ${JSON.stringify(projects[2]?.process || "")},
     implementation: ${JSON.stringify(projects[2]?.implementation || "")},
     result: ${JSON.stringify(projects[2]?.result || "")},
-    bgColor: "bg-gradient-to-br from-amber-50 to-amber-100/40",
-    textColor: "text-amber-950",
-    image: bifanDisplay,
+    bgColor: "bg-gradient-to-br from-slate-900 via-zinc-900 to-rose-950/40",
+    textColor: "text-rose-100",
+    image: teapotExhibition,
   },
   {
     id: "act04",
@@ -187,11 +187,11 @@ export const PROJECTS: Project[] = [
     image: cosrxCharacterIp,
   },
   {
-    id: "act05",
+    id: "act03",
     actNumber: "ACT 05",
-    title: ${JSON.stringify(projects[4]?.title || "'닥터밴드(Dr. Band)' 타깃 세일즈 강화를 위한 마케팅 및 패키지 개발")},
-    duration: ${JSON.stringify(projects[4]?.duration || "2025.03 - 2025.06")},
-    role: ${JSON.stringify(projects[4]?.role || "핵심 상품 마케팅 전략 PM")},
+    title: ${JSON.stringify(projects[4]?.title || "부천국제판타스틱영화제(BIFAN) 협찬 파트너십 부스 총괄 및 메링 매니저")},
+    duration: ${JSON.stringify(projects[4]?.duration || "2025.06 - 2025.07")},
+    role: ${JSON.stringify(projects[4]?.role || "협찬 운영 및 현장 머천다이저 책임")},
     summary: ${JSON.stringify(projects[4]?.summary || "")},
     keyInsight: ${JSON.stringify(projects[4]?.keyInsight || "")},
     problem: ${JSON.stringify(projects[4]?.problem || "")},
@@ -199,9 +199,9 @@ export const PROJECTS: Project[] = [
     process: ${JSON.stringify(projects[4]?.process || "")},
     implementation: ${JSON.stringify(projects[4]?.implementation || "")},
     result: ${JSON.stringify(projects[4]?.result || "")},
-    bgColor: "bg-gradient-to-br from-teal-55/10 to-teal-100/30",
-    textColor: "text-teal-950",
-    image: drBandPackaging,
+    bgColor: "bg-gradient-to-br from-amber-50 to-amber-100/40",
+    textColor: "text-amber-950",
+    image: bifanDisplay,
   },
   {
     id: "act06",
@@ -224,40 +224,40 @@ export const PROJECTS: Project[] = [
 
 export const ARCHIVE_ITEMS = [
   {
-    title: "전시 포스터 '418: I'm a teapot' 메인 키 비주얼",
-    category: "Poster & Graphic",
-    image: teapotExhibition,
-    desc: "기술적 에러 코드와 서정적 시각 예술의 결합을 알리는 메인 프로모션 키 포스터"
-  },
-  {
-    title: "코스알엑스 대학생 맞춤형 루틴 공유 모바일 인터페이스 사양",
-    category: "UI/UX Design",
+    title: ${JSON.stringify(archiveItems[0]?.title || "코스알엑스 대학생 맞춤형 루틴 공유 모바일 인터페이스 사양")},
+    category: ${JSON.stringify(archiveItems[0]?.category || "UI/UX Design")},
     image: cosrxAppMockup,
-    desc: "직관적이고 사랑스러운 파스텔 핑크 테마의 데일리 스킨 트래킹 대시보드"
+    desc: ${JSON.stringify(archiveItems[0]?.desc || "")}
   },
   {
-    title: "한정판 머천다이징 악세사리 쇼케이스 진열 디자인 사양",
-    category: "VMD & Merchandising",
-    image: bifanDisplay,
-    desc: "부천영화제 현장 파트너쉽을 위한 미니멀 스타일의 프리미엄 기프트 박스 및 어글리 시안 정렬"
-  },
-  {
-    title: "코스알엑스 IP 캐릭터 피규어 및 제형 키트 콘셉트",
-    category: "Character IP & Package",
-    image: cosrxCharacterIp,
-    desc: "귀여운 물방울 마스코트를 투사한 친환경 스킨케어 패키지 디자인 렌더"
-  },
-  {
-    title: "닥터밴드 마이크로 오가닉 스킨 밴드 디자인 플랫레이 스터디",
-    category: "Branding & Packaging",
+    title: ${JSON.stringify(archiveItems[1]?.title || "닥터밴드 마이크로 오가닉 스킨 밴드 디자인 플랫레이 스터디")},
+    category: ${JSON.stringify(archiveItems[1]?.category || "Branding & Packaging")},
     image: drBandPackaging,
-    desc: "천연 식용 소재 추출 천과 귀여운 상처 낫기 치료 요정 라벨 일러스트를 함입한 패키지 기획"
+    desc: ${JSON.stringify(archiveItems[1]?.desc || "")}
   },
   {
-    title: "브레인스토밍 무드보드 및 포스트잇 아카이브 벽면",
-    category: "Creative Ideation",
+    title: ${JSON.stringify(archiveItems[2]?.title || "전시 포스터 '418: I\\'m a teapot' 메인 키 비주얼")},
+    category: ${JSON.stringify(archiveItems[2]?.category || "Poster & Graphic")},
+    image: teapotExhibition,
+    desc: ${JSON.stringify(archiveItems[2]?.desc || "")}
+  },
+  {
+    title: ${JSON.stringify(archiveItems[3]?.title || "코스알엑스 IP 캐릭터 피규어 및 제형 키트 콘셉트")},
+    category: ${JSON.stringify(archiveItems[3]?.category || "Character IP & Package")},
+    image: cosrxCharacterIp,
+    desc: ${JSON.stringify(archiveItems[3]?.desc || "")}
+  },
+  {
+    title: ${JSON.stringify(archiveItems[4]?.title || "한정판 머천다이징 악세사리 쇼케이스 진열 디자인 사양")},
+    category: ${JSON.stringify(archiveItems[4]?.category || "VMD & Merchandising")},
+    image: bifanDisplay,
+    desc: ${JSON.stringify(archiveItems[4]?.desc || "")}
+  },
+  {
+    title: ${JSON.stringify(archiveItems[5]?.title || "브레인스토밍 무드보드 및 포스트잇 아카이브 벽면")},
+    category: ${JSON.stringify(archiveItems[5]?.category || "Creative Ideation")},
     image: creativeMoodboard,
-    desc: "모든 프로젝트가 시작하는 원천, 끊임없는 일상 질문들과 영감 스케치가 가득한 연구 보드"
+    desc: ${JSON.stringify(archiveItems[5]?.desc || "")}
   }
 ];
 
