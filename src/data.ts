@@ -5,13 +5,13 @@
 
 import { Project, CareerExperience } from "./types";
 
-import bifanDisplay from "./assets/images/bifan_display_1781543608335.jpg";
-import cosrxAppMockup from "./assets/images/cosrx_app_mockup_1781543557154.jpg";
-import cosrxCharacterIp from "./assets/images/cosrx_character_ip_1781543574219.jpg";
+import bifanDisplay from "./assets/images/2026-06-16.png";
+import cosrxAppMockup from "./assets/images/20260616_025041219.png";
+import cosrxCharacterIp from "./assets/images/20260616_025041219_03.png";
 import creativeMoodboard from "./assets/images/creative_moodboard_1781543674062.jpg";
-import drBandPackaging from "./assets/images/dr_band_packaging_1781543627035.jpg";
-import teapotExhibition from "./assets/images/teapot_exhibition_1781543591256.jpg";
-import juyeonProfile from "./assets/images/juyeon_profile_1781543537437.jpg";
+import drBandPackaging from "./assets/images/20260616_025041219_01.png";
+import teapotExhibition from "./assets/images/20260616_025041219_02.png";
+import juyeonProfile from "./assets/images/20251208_024929031.png";
 
 export const PORTFOLIO_NAME_KR = "김주연";
 export const PORTFOLIO_TITLE_KR = "크리에이티브 기획 & 브랜드 마케터 포트폴리오";
@@ -23,7 +23,7 @@ export const ABOUT_ME = {
   quote: "창의적인 전략과 데이터 분석을 통해 브랜드 가치를 높이고, 고객의 신뢰를 디자인합니다.",
   subQuote: "데이터 분석과 고객 중심 사고를 바탕으로 브랜드 인지도를 높이고, 시장을 사로잡는 마크를 남깁니다. 단순한 홍보를 넘어 사람들의 일상에 스며드는 진정성 있는 에디토리얼 브랜드 기획을 추구합니다.",
   phone: "010-9110-1431",
-  email: "juyeoun104@gmail.com",
+  email: "h20241516@glab.hallym.ac.kr",
   portrait: juyeonProfile, // Will be wired to the generated image path
   education: [
     {

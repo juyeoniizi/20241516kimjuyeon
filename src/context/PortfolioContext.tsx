@@ -19,6 +19,8 @@ interface PortfolioContextType {
   setArchiveItems: React.Dispatch<React.SetStateAction<typeof ARCHIVE_ITEMS>>;
   skillsList: SkillItem[];
   setSkillsList: React.Dispatch<React.SetStateAction<SkillItem[]>>;
+  profileImage: string;
+  setProfileImage: React.Dispatch<React.SetStateAction<string>>;
   resetToDefault: () => void;
   updateProjectImage: (projectId: string, base64Image: string) => void;
   updateArchiveImage: (index: number, base64Image: string) => void;
@@ -32,6 +34,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
   const [archiveItems, setArchiveItems] = useState<typeof ARCHIVE_ITEMS>(ARCHIVE_ITEMS);
   const [skillsList, setSkillsList] = useState<SkillItem[]>(DEFAULT_SKILL_ITEMS);
+  const [profileImage, setProfileImage] = useState<string>(ABOUT_ME.portrait);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -39,15 +42,51 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     const savedProjects = safeStorage.getItem("juyeon_projects");
     const savedArchive = safeStorage.getItem("juyeon_archive_items");
     const savedSkills = safeStorage.getItem("juyeon_skills_list");
+    const savedProfile = safeStorage.getItem("juyeon_profile_image");
 
     if (savedAbout) {
       try { setAboutMe(JSON.parse(savedAbout)); } catch (e) { console.error(e); }
     }
+    if (savedProfile && savedProfile.startsWith("data:image/")) {
+      setProfileImage(savedProfile);
+    }
     if (savedProjects) {
-      try { setProjects(JSON.parse(savedProjects)); } catch (e) { console.error(e); }
+      try {
+        const parsed = JSON.parse(savedProjects);
+        if (Array.isArray(parsed)) {
+          const merged = parsed.map((item: any) => {
+            const defaultProj = PROJECTS.find((p) => p.id === item.id);
+            if (defaultProj) {
+              const hasCustomImage = item.image && item.image.startsWith("data:image/");
+              return {
+                ...item,
+                image: hasCustomImage ? item.image : defaultProj.image,
+              };
+            }
+            return item;
+          });
+          setProjects(merged);
+        }
+      } catch (e) { console.error(e); }
     }
     if (savedArchive) {
-      try { setArchiveItems(JSON.parse(savedArchive)); } catch (e) { console.error(e); }
+      try {
+        const parsed = JSON.parse(savedArchive);
+        if (Array.isArray(parsed)) {
+          const merged = parsed.map((item: any, idx: number) => {
+            const defaultItem = ARCHIVE_ITEMS[idx];
+            if (defaultItem) {
+              const hasCustomImage = item.image && item.image.startsWith("data:image/");
+              return {
+                ...item,
+                image: hasCustomImage ? item.image : defaultItem.image,
+              };
+            }
+            return item;
+          });
+          setArchiveItems(merged);
+        }
+      } catch (e) { console.error(e); }
     }
     if (savedSkills) {
       try { setSkillsList(JSON.parse(savedSkills)); } catch (e) { console.error(e); }
@@ -71,21 +110,28 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     safeStorage.setItem("juyeon_skills_list", JSON.stringify(skillsList));
   }, [skillsList]);
 
-  const resetToDefault = () => {
-    if (window.confirm("정말로 모든 수정된 텍스트와 이미지를 기본값으로 초기화하시겠습니까? (이 작업은 되돌릴 수 없습니다)")) {
-      safeStorage.removeItem("juyeon_about_me");
-      safeStorage.removeItem("juyeon_projects");
-      safeStorage.removeItem("juyeon_archive_items");
-      safeStorage.removeItem("juyeon_skills_list");
+  useEffect(() => {
+    if (profileImage && profileImage.startsWith("data:image/")) {
+      safeStorage.setItem("juyeon_profile_image", profileImage);
+    } else {
       safeStorage.removeItem("juyeon_profile_image");
-      
-      setAboutMe(ABOUT_ME);
-      setProjects(PROJECTS);
-      setArchiveItems(ARCHIVE_ITEMS);
-      setSkillsList(DEFAULT_SKILL_ITEMS);
-      setIsEditMode(false);
-      window.location.reload();
     }
+  }, [profileImage]);
+
+  const resetToDefault = () => {
+    safeStorage.removeItem("juyeon_about_me");
+    safeStorage.removeItem("juyeon_projects");
+    safeStorage.removeItem("juyeon_archive_items");
+    safeStorage.removeItem("juyeon_skills_list");
+    safeStorage.removeItem("juyeon_profile_image");
+    
+    setAboutMe(ABOUT_ME);
+    setProjects(PROJECTS);
+    setArchiveItems(ARCHIVE_ITEMS);
+    setSkillsList(DEFAULT_SKILL_ITEMS);
+    setProfileImage(ABOUT_ME.portrait);
+    setIsEditMode(false);
+    window.location.reload();
   };
 
   const updateProjectImage = (projectId: string, base64Image: string) => {
@@ -113,6 +159,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         setArchiveItems,
         skillsList,
         setSkillsList,
+        profileImage,
+        setProfileImage,
         resetToDefault,
         updateProjectImage,
         updateArchiveImage,

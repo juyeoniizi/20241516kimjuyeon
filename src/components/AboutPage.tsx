@@ -10,15 +10,12 @@ import { usePortfolio } from "../context/PortfolioContext";
 import Editable from "./Editable";
 import { safeStorage } from "../utils/storage";
 
-import portraitImg from "../assets/images/juyeon_profile_1781543537437.jpg";
+import portraitImg from "../assets/images/20251208_024929031.png";
 const PORTRAIT_PATH = portraitImg;
 
 export default function AboutPage() {
-  const { aboutMe, setAboutMe, isEditMode } = usePortfolio();
+  const { aboutMe, setAboutMe, isEditMode, profileImage, setProfileImage } = usePortfolio();
   const [copiedText, setCopiedText] = useState<string | null>(null);
-  const [profileImage, setProfileImage] = useState<string>(() => {
-    return safeStorage.getItem("juyeon_profile_image") || PORTRAIT_PATH;
-  });
 
   const handleImageFile = (file: File) => {
     if (file && file.type.startsWith("image/")) {
@@ -26,7 +23,6 @@ export default function AboutPage() {
       reader.onload = (e) => {
         const result = e.target?.result as string;
         if (result) {
-          safeStorage.setItem("juyeon_profile_image", result);
           setProfileImage(result);
         }
       };
@@ -47,8 +43,7 @@ export default function AboutPage() {
 
   const handleResetImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    safeStorage.removeItem("juyeon_profile_image");
-    setProfileImage(PORTRAIT_PATH);
+    setProfileImage(aboutMe.portrait);
   };
 
   const handleCopy = (text: string, label: string) => {
@@ -182,7 +177,7 @@ export default function AboutPage() {
 
           <div className="mt-2 text-neutral-400 max-w-[280px] sm:max-w-[320px] flex items-center justify-between px-1 text-[10px]">
             <span>💡 실제 증명사진 업로드 가능 (드래그/클릭)</span>
-            {profileImage !== PORTRAIT_PATH && (
+            {profileImage !== aboutMe.portrait && (
               <button
                 onClick={handleResetImage}
                 className="text-pink-600 hover:text-pink-800 font-sans font-medium flex items-center gap-1 transition-colors pointer-events-auto"
