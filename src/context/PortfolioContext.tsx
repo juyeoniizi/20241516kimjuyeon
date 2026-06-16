@@ -50,14 +50,19 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     if (savedAbout) {
       try { 
         const parsed = JSON.parse(savedAbout);
-        // Discard development source paths in local storage or empty portrait values
-        if (!parsed.portrait || parsed.portrait.startsWith("/src/") || parsed.portrait.includes("src/assets/images")) {
+        // Discard development source paths in local storage or empty portrait values or old generated images
+        if (!parsed.portrait || 
+            parsed.portrait.startsWith("/src/") || 
+            parsed.portrait.includes("src/assets/images") ||
+            parsed.portrait.includes("17815435") ||
+            parsed.portrait.includes("17815436")) {
           parsed.portrait = ABOUT_ME.portrait;
         }
         setAboutMe(parsed); 
       } catch (e) { console.error(e); }
     }
-    if (savedProfile && savedProfile.startsWith("data:image/")) {
+    const isOldProfile = savedProfile && (savedProfile.includes("17815435") || savedProfile.includes("17815436"));
+    if (savedProfile && savedProfile.startsWith("data:image/") && !isOldProfile) {
       setProfileImage(savedProfile);
     } else {
       setProfileImage(ABOUT_ME.portrait);
@@ -71,9 +76,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             if (defaultProj) {
               const hasCustomImage = item.image && item.image.startsWith("data:image/");
               const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
+              const isOldGenerated = item.image && (item.image.includes("17815435") || item.image.includes("17815436"));
               return {
                 ...item,
-                image: (hasCustomImage && !isSourcePath) ? item.image : defaultProj.image,
+                image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? item.image : defaultProj.image,
               };
             }
             return item;
@@ -91,9 +97,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             if (defaultItem) {
               const hasCustomImage = item.image && item.image.startsWith("data:image/");
               const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
+              const isOldGenerated = item.image && (item.image.includes("17815435") || item.image.includes("17815436"));
               return {
                 ...item,
-                image: (hasCustomImage && !isSourcePath) ? item.image : defaultItem.image,
+                image: (hasCustomImage && !isSourcePath && !isOldGenerated) ? item.image : defaultItem.image,
               };
             }
             return item;
