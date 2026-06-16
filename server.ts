@@ -26,13 +26,13 @@ app.post("/api/save-portfolio", (req, res) => {
       fs.mkdirSync(dir, { recursive: true });
     }
 
-    // Dynamic file trackers with high-quality original JPEG defaults
-    let juyeonProfileFile = "juyeon_profile_1781543537437.jpg";
-    let bifanDisplayFile = "bifan_display_1781543608335.jpg";
-    let cosrxAppMockupFile = "cosrx_app_mockup_1781543557154.jpg";
-    let cosrxCharacterIpFile = "cosrx_character_ip_1781543574219.jpg";
-    let drBandPackagingFile = "dr_band_packaging_1781543627035.jpg";
-    let teapotExhibitionFile = "teapot_exhibition_1781543591256.jpg";
+    // Dynamic file trackers with user-uploaded high-quality defaults
+    let juyeonProfileFile = "20251208_024929031.png";
+    let bifanDisplayFile = "2026-06-16.png";
+    let cosrxAppMockupFile = "20260616_025041219.png";
+    let cosrxCharacterIpFile = "20260616_025041219_03.png";
+    let drBandPackagingFile = "20260616_025041219_01.png";
+    let teapotExhibitionFile = "20260616_025041219_02.png";
 
     // Helper to save base64 and discover correct extension
     const saveBase64WithCorrectExt = (base64Str: string, baseName: string, fallbackDefault: string) => {

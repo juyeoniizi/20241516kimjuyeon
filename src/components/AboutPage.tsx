@@ -10,7 +10,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import Editable from "./Editable";
 import { safeStorage } from "../utils/storage";
 
-import portraitImg from "../assets/images/juyeon_profile_1781543537437.jpg";
+import portraitImg from "../assets/images/20251208_024929031.png";
 const PORTRAIT_PATH = portraitImg;
 
 export default function AboutPage() {

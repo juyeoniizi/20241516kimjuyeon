@@ -5,13 +5,13 @@
 
 import { Project, CareerExperience } from "./types";
 
-import bifanDisplay from "./assets/images/bifan_display_1781543608335.jpg";
-import cosrxAppMockup from "./assets/images/cosrx_app_mockup_1781543557154.jpg";
-import cosrxCharacterIp from "./assets/images/cosrx_character_ip_1781543574219.jpg";
+import bifanDisplay from "./assets/images/2026-06-16.png";
+import cosrxAppMockup from "./assets/images/20260616_025041219.png";
+import cosrxCharacterIp from "./assets/images/20260616_025041219_03.png";
 import creativeMoodboard from "./assets/images/creative_moodboard_1781543674062.jpg";
-import drBandPackaging from "./assets/images/dr_band_packaging_1781543627035.jpg";
-import teapotExhibition from "./assets/images/teapot_exhibition_1781543591256.jpg";
-import juyeonProfile from "./assets/images/juyeon_profile_1781543537437.jpg";
+import drBandPackaging from "./assets/images/20260616_025041219_01.png";
+import teapotExhibition from "./assets/images/20260616_025041219_02.png";
+import juyeonProfile from "./assets/images/20251208_024929031.png";
 
 export const PORTFOLIO_NAME_KR = "김주연";
 export const PORTFOLIO_TITLE_KR = "Brand Marketer & Creative Planner";
