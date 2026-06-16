@@ -128,69 +128,17 @@ function AppContent() {
                         
                         const data = await response.json();
                         if (data.status === "success") {
+                          // Complete permanent cleanup because the edits are now permanently baked as raw files in src/data.ts and src/assets/images/!
                           safeStorage.removeItem("juyeon_profile_image");
                           localStorage.removeItem("juyeon_profile_image");
-                          setProfileImage(aboutMe.portrait);
-                          
-                          try {
-                            const savedProjs = safeStorage.getItem("juyeon_projects");
-                            if (savedProjs) {
-                              const parsed = JSON.parse(savedProjs);
-                              if (Array.isArray(parsed)) {
-                                const cleaned = parsed.map((item: any) => {
-                                  if (item.image && item.image.startsWith("data:image/")) {
-                                    const { image, ...rest } = item;
-                                    return rest;
-                                  }
-                                  return item;
-                                });
-                                safeStorage.setItem("juyeon_projects", JSON.stringify(cleaned));
-                                localStorage.setItem("juyeon_projects", JSON.stringify(cleaned));
-                                setProjects((prev) => 
-                                  prev.map((p) => {
-                                    const target = cleaned.find((c: any) => c.id === p.id);
-                                    if (target) {
-                                      const { image, ...rest } = target;
-                                      return { ...p, ...rest };
-                                    }
-                                    return p;
-                                  })
-                                );
-                              }
-                            }
-                          } catch (e) {
-                            console.error("Error cleaning saved projects safeStorage:", e);
-                          }
-
-                          try {
-                            const savedArchive = safeStorage.getItem("juyeon_archive_items");
-                            if (savedArchive) {
-                              const parsed = JSON.parse(savedArchive);
-                              if (Array.isArray(parsed)) {
-                                const cleaned = parsed.map((item: any) => {
-                                  if (item.image && item.image.startsWith("data:image/")) {
-                                    const { image, ...rest } = item;
-                                    return rest;
-                                  }
-                                  return item;
-                                });
-                                safeStorage.setItem("juyeon_archive_items", JSON.stringify(cleaned));
-                                localStorage.setItem("juyeon_archive_items", JSON.stringify(cleaned));
-                                setArchiveItems((prev) => 
-                                  prev.map((item, idx) => {
-                                    const target = cleaned[idx];
-                                    if (target) {
-                                      const { image, ...rest } = target;
-                                      return { ...item, ...rest };
-                                    }
-                                    return item;
-                                  })
-                                );
-                              }
-                            }
-                          } catch (e) {
-                            console.error("Error cleaning saved archive safeStorage:", e);
-                          }
+                          safeStorage.removeItem("juyeon_about_me");
+                          localStorage.removeItem("juyeon_about_me");
+                          safeStorage.removeItem("juyeon_projects");
+                          localStorage.removeItem("juyeon_projects");
+                          safeStorage.removeItem("juyeon_archive_items");
+                          localStorage.removeItem("juyeon_archive_items");
+                          safeStorage.removeItem("juyeon_skills_list");
+                          localStorage.removeItem("juyeon_skills_list");
 
                           setAlertDialog({
                             isOpen: true,

@@ -45,10 +45,19 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     const savedProfile = safeStorage.getItem("juyeon_profile_image");
 
     if (savedAbout) {
-      try { setAboutMe(JSON.parse(savedAbout)); } catch (e) { console.error(e); }
+      try { 
+        const parsed = JSON.parse(savedAbout);
+        // Discard development source paths in local storage
+        if (parsed.portrait && (parsed.portrait.startsWith("/src/") || parsed.portrait.includes("src/assets/images"))) {
+          parsed.portrait = ABOUT_ME.portrait;
+        }
+        setAboutMe(parsed); 
+      } catch (e) { console.error(e); }
     }
     if (savedProfile && savedProfile.startsWith("data:image/")) {
       setProfileImage(savedProfile);
+    } else {
+      setProfileImage(ABOUT_ME.portrait);
     }
     if (savedProjects) {
       try {
@@ -58,9 +67,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             const defaultProj = PROJECTS.find((p) => p.id === item.id);
             if (defaultProj) {
               const hasCustomImage = item.image && item.image.startsWith("data:image/");
+              const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
               return {
                 ...item,
-                image: hasCustomImage ? item.image : defaultProj.image,
+                image: (hasCustomImage && !isSourcePath) ? item.image : defaultProj.image,
               };
             }
             return item;
@@ -77,9 +87,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             const defaultItem = ARCHIVE_ITEMS[idx];
             if (defaultItem) {
               const hasCustomImage = item.image && item.image.startsWith("data:image/");
+              const isSourcePath = item.image && (item.image.startsWith("/src/") || item.image.includes("src/assets/images"));
               return {
                 ...item,
-                image: hasCustomImage ? item.image : defaultItem.image,
+                image: (hasCustomImage && !isSourcePath) ? item.image : defaultItem.image,
               };
             }
             return item;
